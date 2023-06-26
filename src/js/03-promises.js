@@ -54,4 +54,4 @@ function whenPromiseIsCreated(event) {
     event.currentTarget.reset();
   }
 }
-//
+///
