@@ -52,6 +52,7 @@ flatpickr(pickDate, {
     }
   },
 });
+
 const countdown = {
   halt() {
     clearInterval(timerId);
