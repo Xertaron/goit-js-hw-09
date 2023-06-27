@@ -25,10 +25,10 @@ Report.info(
 );
 
 flatpickr(pickDate, {
+  enableTime: true,
+  time_24hr: true,
   defaultDate: new Date(),
   minuteIncrement: 1,
-  time_24hr: true,
-  enableTime: true,
   onClose(selectedDates) {
     if (selectedDates[0].getTime() < Date.now()) {
       Report.failure(
@@ -60,23 +60,23 @@ const countdown = {
     dataButton.setAttribute('disabled', '');
     pickDate.removeAttribute('disabled', '');
   },
-  displayClock(ms) {
+  convertMs(ms) {
     const second = 1000;
     const minute = second * 60;
     const hour = minute * 60;
     const day = hour * 24;
 
-    const days = this.displayRemainingTime(Math.floor(ms / day));
-    const hours = this.displayRemainingTime(Math.floor((ms % day) / hour));
-    const minutes = this.displayRemainingTime(
+    const days = this.addLeadingZero(Math.floor(ms / day));
+    const hours = this.addLeadingZero(Math.floor((ms % day) / hour));
+    const minutes = this.addLeadingZero(
       Math.floor(((ms % day) % hour) / minute)
     );
-    const seconds = this.displayRemainingTime(
+    const seconds = this.addLeadingZero(
       Math.floor((((ms % day) % hour) % minute) / second)
     );
     return { days, hours, minutes, seconds };
   },
-  displayRemainingTime(value) {
+  addLeadingZero(value) {
     return String(value).padStart(2, 0);
   },
   selector: document.querySelector('.timer'),
@@ -97,15 +97,15 @@ const countdown = {
 
         return;
       }
-      const { days, hours, minutes, seconds } = this.displayClock(difference);
+      const { days, hours, minutes, seconds } = this.convertMs(difference);
       this.selector.querySelector('[data-days]').textContent =
-        this.displayRemainingTime(days);
+        this.addLeadingZero(days);
       this.selector.querySelector('[data-hours]').textContent =
-        this.displayRemainingTime(hours);
+        this.addLeadingZero(hours);
       this.selector.querySelector('[data-minutes]').textContent =
-        this.displayRemainingTime(minutes);
+        this.addLeadingZero(minutes);
       this.selector.querySelector('[data-seconds]').textContent =
-        this.displayRemainingTime(seconds);
+        this.addLeadingZero(seconds);
     }, 1000);
   },
 };
